@@ -2,8 +2,19 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../connection';
 
 const getProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { search } = req.query;
+
   try {
-    const products = await db.any('SELECT * FROM products');
+    let products;
+
+    if (search && typeof search === 'string') {
+      // Se o parâmetro "search" estiver presente, filtre os produtos por nome
+      products = await db.any('SELECT * FROM products WHERE name ILIKE $1', [`%${search}%`]);
+    } else {
+      // Caso contrário, obtenha todos os produtos
+      products = await db.any('SELECT * FROM products');
+    }
+
     res.status(200).json(products);
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -60,17 +71,17 @@ const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { method } = req;
-
-  if (method === 'GET') {
-    getProducts(req, res);
-  } else if (method === 'POST') {
-    createProduct(req, res);
-  } else if (method === 'PUT') {
-    updateProduct(req, res);
-  } else if (method === 'DELETE') {
-    deleteProduct(req, res);
-  } else {
-    res.status(405).json({ message: 'Method Not Allowed' });
-  }
-};
+    const { method } = req;
+  
+    if (method === 'GET') {
+      getProducts(req, res);
+    } else if (method === 'POST') {
+      createProduct(req, res);
+    } else if (method === 'PUT') {
+      updateProduct(req, res);
+    } else if (method === 'DELETE') {
+      deleteProduct(req, res);
+    } else {
+      res.status(405).json({ message: 'Method Not Allowed' });
+    }
+  };

@@ -19,6 +19,7 @@ import {
   Paper,
   Autocomplete,
   Box,
+  Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -60,37 +61,49 @@ const ProductForm = styled.form`
 `;
 
 export default function Products() {
-  const [openModal, setOpenModal] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [formData, setFormData] = useState<Product>({
-    id: 0,
-    name: '',
-    type: '',
-    price: 0,
-  });  
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleFilterChange = async (event: React.ChangeEvent<{}>, newValue: string | null) => {
-    if (newValue) {
-      try {
-        const response = await fetch(`/api/products?search=${newValue}`);
-        const data = await response.json();
-        setFilteredProducts(data);
-      } catch (error) {
-        console.error('Error fetching filtered products:', error);
+    const [openModal, setOpenModal] = useState(false);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [formData, setFormData] = useState<Product>({
+      id: 0,
+      name: '',
+      type: '',
+      price: 0,
+    });
+  
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    };
+  
+    const handleFilterChange = async (event: React.ChangeEvent<{}>, newValue: string | null) => {
+      if (newValue) {
+        try {
+          const response = await fetch(`/api/products?search=${newValue}`);
+          const data = await response.json();
+          setProducts(data);
+        } catch (error) {
+          console.error('Error fetching filtered products:', error);
+        }
+      } else {
+        // Se o campo de filtro estiver vazio, carregue todos os produtos
+        fetchProducts();
       }
-    } else {
-      setFilteredProducts(products);
-    }
-  };
+    };
+  
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+  
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -160,44 +173,40 @@ export default function Products() {
     setFormData({ id: 0, name: '', type: '', price: 0 });
   };
 
+  
   useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const response = await fetch('/api/products');
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    }
-
     fetchProducts();
   }, []);
 
   return (
     <Container>
-      <h1>Products</h1>
-      <Box>
+      <Typography variant="h3" sx={{my: 3}} >Product List</Typography>
+      <Box sx={{display: 'flex', width: '100%'}}>
         <Autocomplete
           freeSolo
-          options={filteredProducts.map((product) => product.name)}
+          fullWidth
+          options={products.map((product) => product.name)}
           onInputChange={handleFilterChange}
+          onChange={(event, newValue) => {
+            const selected = products.find((product) => product.name === newValue);
+            setSelectedProduct(selected || null);
+          }}
           renderInput={(params) => (
-            <TextField {...params} label="Filter by ID or Name" />
+            <TextField {...params} label="Filter by Product Name" />
           )}
         />
-        <Button variant="outlined" onClick={() => setOpenModal(true)}>Criar Novo Produto</Button>
+        <Button sx={{ml: 2, width: "200px", fontWeight: "bold"}} variant="contained" onClick={() => setOpenModal(true)}>New Product</Button>
       </Box>
 
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Actions</TableCell>
+      <TableContainer sx={{mt: 5}} component={Paper}>
+        <Table >
+          <TableHead sx={{bgcolor: '#3f51b5'}}>
+            <TableRow >
+              <TableCell sx={{fontWeight:"bold", color: 'white'}}>Name</TableCell>
+              <TableCell sx={{fontWeight:"bold", color: 'white'}}>Type</TableCell>
+              <TableCell sx={{fontWeight:"bold", color: 'white'}}>Price</TableCell>
+              <TableCell align="center" sx={{fontWeight:"bold", color: 'white'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -206,7 +215,7 @@ export default function Products() {
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.type}</TableCell>
                 <TableCell>${product.price}</TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Button onClick={() => handleEdit(product)} startIcon={<EditIcon />}>Edit</Button>
                   <Button onClick={() => handleDelete(product.id)} startIcon={<DeleteIcon />}>Delete</Button>
                 </TableCell>
