@@ -4,10 +4,12 @@ import HomeIcon from '@mui/icons-material/Home'
 import MailIcon from '@mui/icons-material/Mail'
 import MenuIcon from '@mui/icons-material/Menu'
 import PeopleIcon from '@mui/icons-material/People'
+import PublicIcon from '@mui/icons-material/Public'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import {
     AppBar,
     Box,
+    Button,
     Container,
     CssBaseline,
     Dialog,
@@ -75,13 +77,34 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         aria-label="open drawer"
                         onClick={toggleDrawer}
                         edge="start"
-                        sx={{ mr: 2 }} // Remova o display daqui
+                        sx={{ mr: 2 }}
                     >
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        My App
+                        {/* Adicione sua logo aqui */}
+                        <img
+                            src="/next.svg"
+                            alt="Logo"
+                            style={{ width: '50px', height: 'auto' }}
+                        />
                     </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
+                    {/* Botão de idioma */}
+                    <IconButton color="inherit" sx={{ mr: 3 }}>
+                        <PublicIcon />
+                    </IconButton>
+                    {/* Botão "Começar" */}
+                    <Button color="inherit" variant="outlined" sx={{ mr: 3 }}>
+                        Comece a usar agora
+                    </Button>
+                    {/* Ícone de mensagem */}
+                    <SpeedDial
+                        ariaLabel="SpeedDial"
+                        icon={<MailIcon />}
+                        onClick={openContactDialog}
+                        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                    />
                 </Toolbar>
             </AppBar>
             <Drawer

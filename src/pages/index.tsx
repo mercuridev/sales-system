@@ -1,126 +1,232 @@
-import AssessmentIcon from '@mui/icons-material/Assessment'
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter'
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import GitHubIcon from '@mui/icons-material/GitHub'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'
+import YouTubeIcon from '@mui/icons-material/YouTube'
 import {
     Box,
     Button,
+    Card,
+    CardContent,
     Container,
+    Divider,
     Grid,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Paper,
-    Toolbar,
     Typography
 } from '@mui/material'
-import Image from 'next/image'
 import React from 'react'
-import {
-    Bar,
-    BarChart,
-    CartesianGrid,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis
-} from 'recharts'
-
-import Layout from '../components/layout'
 
 const reasonsToUse = [
-    'Aumenta a eficiência operacional',
-    'Melhora a colaboração em equipe',
-    'Reduz erros humanos',
-    'Amplia a visibilidade dos processos',
-    'Agiliza tomadas de decisão',
+    'Automatize processos operacionais',
+    'Aumente a eficiência da equipe',
+    'Tenha visibilidade completa dos dados',
     'Integração com outras ferramentas',
-    'Suporte técnico 24/7',
-    'Atualizações frequentes com novas funcionalidades',
-    'Acessibilidade e usabilidade',
-    'Economia de tempo e recursos'
-]
-
-const data = [
-    { name: 'Janeiro', produtividade: 80 },
-    { name: 'Fevereiro', produtividade: 90 },
-    { name: 'Março', produtividade: 85 },
-    { name: 'Abril', produtividade: 95 },
-    { name: 'Maio', produtividade: 88 },
-    { name: 'Junho', produtividade: 92 }
+    'Atualizações regulares com novos recursos',
+    'Acessível em qualquer dispositivo',
+    'Relatórios personalizáveis',
+    'Segurança avançada de dados',
+    'Fácil de implementar e usar'
 ]
 
 const HomePage: React.FC = () => {
-    const [drawerOpen, setDrawerOpen] = React.useState(false)
-
-    const toggleDrawer = () => {
-        setDrawerOpen(!drawerOpen)
-    }
-
     return (
-        <Layout>
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <Toolbar />
-                <Container>
+        <Box>
+            {/* Banner */}
+            <Box sx={{ p: 3, backgroundColor: '#1976D2', color: 'white' }}>
+                <Container maxWidth="md">
                     <Typography variant="h4" gutterBottom>
-                        Bem-vindo à Nossa Plataforma
+                        Procurando o melhor sistema de gestão para sua empresa?
+                        Conheça MercuriDev!
                     </Typography>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <Paper elevation={3} sx={{ p: 2 }}>
-                                <Typography variant="h6">
-                                    Aumente Sua Produtividade
-                                </Typography>
-                                <Typography variant="body1">
-                                    Nossa plataforma revolucionária vai melhorar
-                                    a eficiência do seu trabalho e impulsionar a
-                                    sua produtividade.
-                                </Typography>
-                                <Image
-                                    src="/product-image.jpg"
-                                    alt="Product"
-                                    width={400}
-                                    height={300}
-                                />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Paper elevation={3} sx={{ p: 2 }}>
-                                <Typography variant="h6">
-                                    Estatísticas de Produtividade
-                                </Typography>
-                                <ResponsiveContainer width="100%" height={300}>
-                                    <BarChart data={data}>
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="name" />
-                                        <YAxis />
-                                        <Tooltip />
-                                        <Bar
-                                            dataKey="produtividade"
-                                            fill="#8884d8"
-                                        />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                    <Typography variant="h5" sx={{ mt: 3 }}>
-                        10 Motivos para Usar Nosso Produto
+                    <Typography variant="body1" paragraph>
+                        MercuriDev é o sistema de gestão que automatiza sua
+                        operação de ponta a ponta.
                     </Typography>
-                    <List>
-                        {reasonsToUse.map((reason, index) => (
-                            <ListItem key={index}>
-                                <ListItemIcon>
-                                    <AssessmentIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={reason} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Button variant="contained" color="primary" sx={{ mt: 3 }}>
-                        Saiba Mais
+                    <Button variant="contained" color="primary">
+                        Comece a usar agora
                     </Button>
                 </Container>
             </Box>
-        </Layout>
+
+            {/* Reasons to Use */}
+            <Box sx={{ p: 3 }}>
+                <Container maxWidth="md">
+                    <Typography variant="h5" align="center" gutterBottom>
+                        10 Motivos para Usar o MercuriDev
+                    </Typography>
+                    <Grid container spacing={3}>
+                        {reasonsToUse.map((reason, index) => (
+                            <Grid item xs={12} sm={6} md={4} key={index}>
+                                <Card sx={{ height: '100%' }}>
+                                    <CardContent>
+                                        <Typography variant="body1">
+                                            {reason}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Container>
+            </Box>
+
+            {/* Customer Feedback */}
+            <Box sx={{ p: 3, backgroundColor: '#1976D2', color: 'white' }}>
+                <Container maxWidth="md">
+                    <Typography variant="h5" align="center" gutterBottom>
+                        Feedback de Clientes
+                    </Typography>
+                    <Typography variant="body1" align="center" paragraph>
+                        "O MercuriDev revolucionou nossa empresa. Estamos mais
+                        produtivos e eficientes do que nunca!"
+                    </Typography>
+                    <Typography variant="subtitle2" align="center" gutterBottom>
+                        - Cliente Satisfeito
+                    </Typography>
+                </Container>
+            </Box>
+
+            {/* Product Features */}
+            <Box sx={{ p: 3 }}>
+                <Container maxWidth="md">
+                    <Typography variant="h5" align="center" gutterBottom>
+                        Nossos Planos e Recursos
+                    </Typography>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} sm={4}>
+                            <Card sx={{ height: '100%' }}>
+                                <CardContent>
+                                    <BusinessCenterIcon fontSize="large" />
+                                    <Typography variant="h6">
+                                        Plano Básico
+                                    </Typography>
+                                    <Divider sx={{ my: 1 }} />
+                                    <Typography variant="body1">
+                                        Recurso 1<br />
+                                        Recurso 2<br />
+                                        Recurso 3
+                                    </Typography>
+                                    <Typography
+                                        variant="h6"
+                                        color="primary"
+                                        sx={{ mt: 2 }}
+                                    >
+                                        $19/mês
+                                    </Typography>
+                                    <Button variant="outlined" fullWidth>
+                                        Saiba Mais
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Card sx={{ height: '100%' }}>
+                                <CardContent>
+                                    <MonetizationOnIcon fontSize="large" />
+                                    <Typography variant="h6">
+                                        Plano Intermediário
+                                    </Typography>
+                                    <Divider sx={{ my: 1 }} />
+                                    <Typography variant="body1">
+                                        Recurso 1<br />
+                                        Recurso 2<br />
+                                        Recurso 3<br />
+                                        Recurso 4
+                                    </Typography>
+                                    <Typography
+                                        variant="h6"
+                                        color="primary"
+                                        sx={{ mt: 2 }}
+                                    >
+                                        $39/mês
+                                    </Typography>
+                                    <Button variant="outlined" fullWidth>
+                                        Saiba Mais
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Card sx={{ height: '100%' }}>
+                                <CardContent>
+                                    <EmojiPeopleIcon fontSize="large" />
+                                    <Typography variant="h6">
+                                        Plano Premium
+                                    </Typography>
+                                    <Divider sx={{ my: 1 }} />
+                                    <Typography variant="body1">
+                                        Todos os recursos incluídos
+                                    </Typography>
+                                    <Typography
+                                        variant="h6"
+                                        color="primary"
+                                        sx={{ mt: 2 }}
+                                    >
+                                        $79/mês
+                                    </Typography>
+                                    <Button variant="outlined" fullWidth>
+                                        Saiba Mais
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </Box>
+
+            {/* Footer */}
+            <Box sx={{ p: 3, backgroundColor: '#1976D2', color: 'white' }}>
+                <Container maxWidth="md">
+                    <Grid container spacing={3} justifyContent="center">
+                        <Grid item>
+                            <a href="#">
+                                <InstagramIcon
+                                    sx={{ color: 'white' }}
+                                    fontSize="large"
+                                />
+                            </a>
+                        </Grid>
+                        <Grid item>
+                            <a href="#">
+                                <FacebookIcon
+                                    sx={{ color: 'white' }}
+                                    fontSize="large"
+                                />
+                            </a>
+                        </Grid>
+                        <Grid item>
+                            <a href="#">
+                                <YouTubeIcon
+                                    sx={{ color: 'white' }}
+                                    fontSize="large"
+                                />
+                            </a>
+                        </Grid>
+                        <Grid item>
+                            <a href="#">
+                                <GitHubIcon
+                                    sx={{ color: 'white' }}
+                                    fontSize="large"
+                                />
+                            </a>
+                        </Grid>
+                    </Grid>
+                    <Box sx={{ mt: 3 }}>
+                        <Button color="inherit" sx={{ mr: 2 }}>
+                            Política de Privacidade
+                        </Button>
+                        <Button color="inherit" sx={{ mr: 2 }}>
+                            Termos de Uso
+                        </Button>
+                        <Button color="inherit">
+                            Código de Ética e Conduta
+                        </Button>
+                        <Button color="inherit">Trabalhe conosco</Button>
+                    </Box>
+                </Container>
+            </Box>
+        </Box>
     )
 }
 
